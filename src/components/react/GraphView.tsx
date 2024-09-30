@@ -49,7 +49,7 @@ const GraphView = forwardRef(function A({ courses }: { courses: Course[] }, ref)
             {
                 autoResize: false,
                 interaction: { navigationButtons: true },
-                edges: { smooth: false, arrows: { to: true } },
+                edges: { smooth: true, arrows: { to: true } },
                 physics: { stabilization: false },
                 layout: { improvedLayout: false }
             }
