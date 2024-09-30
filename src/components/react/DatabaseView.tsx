@@ -26,24 +26,37 @@ export function useDebounce<TValue>(value: TValue, delayMs: number): TValue {
     return debouncedValue;
 }
 
-const DatabaseView = ({ db, onFocusChanged }: { db: Database, onFocusChanged?: (a: CourseCode) => void,  }) => {
+const DatabaseView = ({
+    db,
+    onFocusChanged
+}: {
+    db: Database;
+    onFocusChanged?: (a: CourseCode) => void;
+}) => {
     const [searchRaw, setSearch] = useState<string | null>(null);
 
     const search = useDebounce(searchRaw, 100);
 
     const data = useMemo(
         () =>
-            db.courses
-                .filter((c) => search === null || search.length === 0 || courseMatchesSearch(search, c)),
+            db.courses.filter(
+                (c) => search === null || search.length === 0 || courseMatchesSearch(search, c)
+            ),
         [search, db.courses]
     );
 
     return (
         <div className="my-4 flex h-full w-[30%] flex-col gap-6 overflow-hidden">
             <h2 className="text-center text-2xl font-bold">List View</h2>
-            <label className="flex flex-row gap-2 text-xl text-center">
+            <label className="flex flex-row gap-2 text-center text-xl">
                 Search By Code
-                <input className="rounded bg-slate-900 text-text" type="text" name="search" value={searchRaw ?? ""} onChange={(e) => setSearch(e.target.value)} />
+                <input
+                    className="rounded bg-slate-900 text-text"
+                    type="text"
+                    name="search"
+                    value={searchRaw ?? ""}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
             </label>
             {/* <div>
                 <PrefixList
@@ -58,7 +71,11 @@ const DatabaseView = ({ db, onFocusChanged }: { db: Database, onFocusChanged?: (
                 computeItemKey={(i) => `${i}-${data[i].title}`}
                 data={data}
                 itemContent={(i, course) => (
-                    <CourseCard onClick={() => onFocusChanged?.(course.code)} className={i === data.length - 1 ? "" : "mb-4"} course={course} />
+                    <CourseCard
+                        onClick={() => onFocusChanged?.(course.code)}
+                        className={i === data.length - 1 ? "" : "mb-4"}
+                        course={course}
+                    />
                 )}
             />
         </div>

@@ -5,20 +5,24 @@ import "vis-network/styles/vis-network.min.css";
 
 const getId = (courseCode: CourseCode) => `${courseCode.prefix.toUpperCase()} ${courseCode.number}`;
 
-const GraphView = forwardRef(function A({ courses }: {courses: Course[]}, ref) {
+const GraphView = forwardRef(function A({ courses }: { courses: Course[] }, ref) {
     const containerRef = useRef<HTMLDivElement>(null);
     const netRef = useRef<Network | null>(null);
 
-    useImperativeHandle(ref, () => ({
-        focusCourse: (courseCode: CourseCode) => {
-            if (netRef.current) {
-                const net = netRef.current;
-                const id = getId(courseCode);
-                net.focus(id, {animation: true, scale: 1});
-                net.selectNodes([id]);
+    useImperativeHandle(
+        ref,
+        () => ({
+            focusCourse: (courseCode: CourseCode) => {
+                if (netRef.current) {
+                    const net = netRef.current;
+                    const id = getId(courseCode);
+                    net.focus(id, { animation: true, scale: 1 });
+                    net.selectNodes([id]);
+                }
             }
-        }
-    }), []);
+        }),
+        []
+    );
 
     const getKey = (course: Course) => getId(course.code);
 
@@ -27,7 +31,7 @@ const GraphView = forwardRef(function A({ courses }: {courses: Course[]}, ref) {
 
         const nodes = courses.map((c) => ({
             id: getId(c.code),
-            label: getId(c.code),
+            label: getId(c.code)
         }));
 
         const edges = courses.flatMap((c) =>
@@ -44,7 +48,7 @@ const GraphView = forwardRef(function A({ courses }: {courses: Course[]}, ref) {
             { nodes, edges },
             {
                 autoResize: false,
-                interaction: { navigationButtons: true, },
+                interaction: { navigationButtons: true },
                 edges: { smooth: false, arrows: { to: true } },
                 physics: { stabilization: false },
                 layout: { improvedLayout: false }

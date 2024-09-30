@@ -1,6 +1,14 @@
 import type { Course } from "@/lib/db";
 
-const CourseCard = ({ course, className, onClick }: { course: Course; className?: string, onClick?: () => void }) => {
+const CourseCard = ({
+    course,
+    className,
+    onClick
+}: {
+    course: Course;
+    className?: string;
+    onClick?: () => void;
+}) => {
     return (
         <div
             onClick={onClick}

@@ -4,13 +4,15 @@ import { useDatabase, type CourseCode, type Database } from "@/lib/db";
 import DatabaseView from "./DatabaseView";
 
 const DbLoaded = ({ db }: { db: Database }) => {
-
-    const leRef = useRef<{focusCourse: (c: CourseCode) => void}>();
+    const leRef = useRef<{ focusCourse: (c: CourseCode) => void }>();
 
     return (
         <React.StrictMode>
             <div className="flex h-full flex-row justify-evenly gap-6">
-                <DatabaseView onFocusChanged={(code) => leRef.current?.focusCourse?.(code)} db={db} />
+                <DatabaseView
+                    onFocusChanged={(code) => leRef.current?.focusCourse?.(code)}
+                    db={db}
+                />
                 <GraphView ref={leRef} courses={db.courses} />
             </div>
         </React.StrictMode>
